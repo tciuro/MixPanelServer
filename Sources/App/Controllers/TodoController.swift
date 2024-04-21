@@ -1,5 +1,6 @@
 import Fluent
 import Vapor
+import Mixpanel
 
 struct TodoController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {

@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version:5.9
 import PackageDescription
 
 let package = Package(
@@ -13,6 +13,8 @@ let package = Package(
         .package(url: "https://github.com/vapor/fluent.git", from: "4.9.0"),
         // 🐘 Fluent driver for Postgres.
         .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.8.0"),
+        .package(url: "https://github.com/tciuro/mixpanel-swift", branch: "master"),
+        .package(url: "https://github.com/sbooth/CSQLite", branch: "main"),
     ],
     targets: [
         .executableTarget(
@@ -21,21 +23,15 @@ let package = Package(
                 .product(name: "Fluent", package: "fluent"),
                 .product(name: "FluentPostgresDriver", package: "fluent-postgres-driver"),
                 .product(name: "Vapor", package: "vapor"),
-            ],
-            swiftSettings: swiftSettings
+                .product(name: "Mixpanel", package: "mixpanel-swift"),
+                "CSQLite"
+            ]
         ),
         .testTarget(
             name: "AppTests",
             dependencies: [
                 .target(name: "App"),
-                .product(name: "XCTVapor", package: "vapor"),
-            ],
-            swiftSettings: swiftSettings
-        )
+                .product(name: "XCTVapor", package: "vapor")
+            ]),
     ]
 )
-
-var swiftSettings: [SwiftSetting] { [
-    .enableUpcomingFeature("DisableOutwardActorInference"),
-    .enableExperimentalFeature("StrictConcurrency"),
-] }
